@@ -3,14 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Yazaralemi.Models;
 
 namespace Yazaralemi.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        public ActionResult Index()
+        public ActionResult Index(int? cid, int page = 1)
         {
-            return View();
+            int postPerPage = 5;
+
+            ViewBag.SubTitle = "Bir fakirin düşünceleri";
+            ViewBag.NextPage = page + 1;
+            ViewBag.PrevPage = page - 1;
+            ViewBag.cid = cid;
+            IQueryable<Post> result = ctx.Posts;
+            var cat = ctx.Categories.Find(cid);
+
+            if (cat != null)
+            {
+                ViewBag.Subtitle = cat.CategoryName;
+            }
+
+            if (cid != null)
+                result = result.Where(x => x.CategoryId == cid);
+
+            if(result.Count() <= 0)
+            {
+                return PartialView("_NotFound");
+            }
+
+            return View(result.OrderByDescending(x => x.CreatedAt).Skip((page - 1) * postPerPage).Take(postPerPage).ToList());
         }
 
         public ActionResult About()
@@ -25,6 +48,11 @@ namespace Yazaralemi.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult CategoriesPartial()
+        {
+            return PartialView("_CategoriesPartial", ctx.Categories.ToList());
         }
     }
 }
