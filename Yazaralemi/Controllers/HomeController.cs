@@ -13,26 +13,26 @@ namespace Yazaralemi.Controllers
         {
             int postPerPage = 5;
 
-            ViewBag.SubTitle = "Bir fakirin düşünceleri";
-            ViewBag.NextPage = page + 1;
-            ViewBag.PrevPage = page - 1;
-            ViewBag.cid = cid;
+
             IQueryable<Post> result = ctx.Posts;
+
+            ViewBag.subTitle = "Bir fakirin düşünceleri";
+            ViewBag.nextPage = page + 1;
+            ViewBag.prevPage = page - 1 < 2 ? 1 : page - 1;
+            ViewBag.cid = cid;
+            ViewBag.page = page;
             var cat = ctx.Categories.Find(cid);
 
             if (cat != null)
-            {
                 ViewBag.Subtitle = cat.CategoryName;
-            }
 
             if (cid != null)
                 result = result.Where(x => x.CategoryId == cid);
 
             if(result.Count() <= 0)
-            {
                 return PartialView("_NotFound");
-            }
 
+            ViewBag.pageCount = Math.Ceiling(result.Count() / (decimal)postPerPage);
             return View(result.OrderByDescending(x => x.CreatedAt).Skip((page - 1) * postPerPage).Take(postPerPage).ToList());
         }
 
