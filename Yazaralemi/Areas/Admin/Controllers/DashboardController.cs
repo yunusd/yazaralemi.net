@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Yazaralemi.Areas.Admin.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : AdminBaseController
     {
         // GET: Admin/Dashboard
         public ActionResult Index()
