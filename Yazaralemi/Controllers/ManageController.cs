@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -7,11 +8,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Yazaralemi.Models;
+using Yazaralemi.ViewModels;
 
 namespace Yazaralemi.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -32,9 +34,9 @@ namespace Yazaralemi.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -64,13 +66,16 @@ namespace Yazaralemi.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(userId);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                Photo = user.Photo
             };
             return View(model);
         }
@@ -333,7 +338,46 @@ namespace Yazaralemi.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        public ActionResult UploadAvatar()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var userVm = new UploadAvatarViewModel
+            {
+                Photo = user.Photo
+            };
+            return View(userVm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadAvatar(UploadAvatarViewModel userVm)
+        {
+            var user = ctx.Users.Find(User.Identity.GetUserId());
+
+            if (ModelState.IsValid)
+            {
+                var saveFolderPath = Server.MapPath("~/Upload/Profiles");
+                var ext = Path.GetExtension(userVm.File.FileName); // get extension of file
+                var saveFileName = Guid.NewGuid() + ext;
+                var saveFilePath = Path.Combine(saveFolderPath, saveFileName); // combines paths
+                #region eski dosyayı sil
+                if (!string.IsNullOrEmpty(user.Photo))
+                {
+                    string deleteFilePath = Path.Combine(saveFolderPath, user.Photo);
+                    System.IO.File.Delete(deleteFilePath);
+                }
+                #endregion
+                userVm.File.SaveAs(saveFilePath);
+                user.Photo = saveFileName;
+                ctx.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            userVm.Photo = user.Photo;
+            return View(userVm);
+        }
+
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +428,6 @@ namespace Yazaralemi.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

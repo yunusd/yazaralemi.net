@@ -1,0 +1,49 @@
+﻿@model UploadAvatarViewModel
+@{
+    ViewBag.Title = "UploadAvatar";
+}
+
+<h2>UploadAvatar</h2>
+
+@if (string.IsNullOrEmpty(Model.Photo))
+{
+    <img src="~/Images/avatar.png" id="avatar" class="img-rounded" height="96" />
+}
+else
+{
+    <img src="~/Upload/Profiles/@Model.Photo" id="avatar" class="img-thumbnail" height="96" />
+}
+<br />
+@using (Html.BeginForm("UploadAvatar", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group mt-2">
+        <label for="File">Bir resim seçiniz :</label>
+        <input type="file" class="form-control-file" id="File" name="File" accept="image/*">
+        @Html.ValidationMessageFor(x => x.File, null, new { @class = "text-danger" })
+    </div>
+
+    <a href="@Url.Action("Index","Manage")" class="btn btn-secondary">İptal</a>
+    <button class="btn btn-primary">Gönder</button>
+}
+@*<a href="@Url.Action("UploadAvatar","Manage")">Resmi Güncelle</a>*@
+
+@section scripts{
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#avatar').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#File").change(function () {
+            readURL(this);
+        });
+    </script>
+}

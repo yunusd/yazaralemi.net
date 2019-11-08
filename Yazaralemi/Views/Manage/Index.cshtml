@@ -9,6 +9,18 @@
 <div>
     <h4>Change your account settings</h4>
     <hr />
+    <div>
+        @if (string.IsNullOrEmpty(Model.Photo))
+        {
+            <img src="~/Images/avatar.png" height="96" class="img-rounded" />
+        }
+        else
+        {
+            <img src="~/Upload/Profiles/@Model.Photo" class="img-thumbnail" height="96" />
+        }
+        <br />
+        <a href="@Url.Action("UploadAvatar","Manage")">Resmi Güncelle</a>
+    </div>
     <dl class="dl-horizontal">
         <dt>Password:</dt>
         <dd>
@@ -30,13 +42,13 @@
         </dd>
         @*
             Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
+
              See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
+
              Uncomment the following block after you have set up two-factor authentication
         *@
-        @*  
+        @*
             <dt>Phone Number:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")
