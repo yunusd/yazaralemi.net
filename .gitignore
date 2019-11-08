@@ -261,4 +261,10 @@ __pycache__/
 *.pyc
 
 # Kullanýcýnýn yüklediði fotoðraflar
-Upload
+# yolun içinde ki herþeyi hariç tut
+Yazaralemi/Upload/Profiles/*
+Yazaralemi/Upload/Posts/*
+
+# exception to the rule
+!Yazaralemi/Upload/Posts/.gitkeep 
+!Yazaralemi/Upload/Profiles/.gitkeep 
