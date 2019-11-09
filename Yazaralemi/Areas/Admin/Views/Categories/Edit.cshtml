@@ -1,0 +1,32 @@
+﻿@model Category
+@{
+    ViewBag.Title = "Kategori Düzenle";
+    ViewBag.HeaderTitle = "Kategori Düzenle";
+}
+
+@using (@Html.BeginForm("Edit", "Categories", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+    <div class="card card-primary card-outline">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control w-100", placeholder = "Kategori Adı" })
+                        @Html.ValidationMessageFor(x => x.CategoryName, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <div class="float-right">
+                <button type="submit" id="sendPost" class="btn btn-primary"><i class="far fa-envelope"></i> Gönder</button>
+            </div>
+            <a href="@Url.Action("Index","Categories")" class="btn btn-default"><i class="fas fa-times"></i> Vazgeç</a>
+        </div>
+        <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+}

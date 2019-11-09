@@ -29,6 +29,8 @@ namespace Yazaralemi.Controllers
             if (cid != null)
                 result = result.Where(x => x.CategoryId == cid);
 
+            //todo: currently if there is no posts exists it returning 404 page. It should return only when category or post not exists.
+            //todo: move _NotFound view to shared folder
             if(result.Count() <= 0)
                 return PartialView("_NotFound");
 
