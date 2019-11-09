@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -18,15 +19,36 @@ namespace Yazaralemi.Areas.Admin.Controllers
             return View(ctx.Posts.ToList());
         }
 
-        [HttpPost]
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public ActionResult New()
         {
-            var post = ctx.Posts.Find(id);
-            if (post == null) return Json("failed");
-            ctx.Posts.Remove(post);
-            ctx.SaveChanges();
+            ViewBag.categoryId = new SelectList(ctx.Categories.ToList(), "Id", "CategoryName");
 
-            return Json("success");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult New(PostNewViewModel post)
+        {
+            if (ModelState.IsValid)
+            {
+                var newPost = new Post
+                {
+                    AuthorId = ctx.Users.Find(User.Identity.GetUserId()).Id,
+                    Title = post.Title,
+                    Content = post.Content,
+                    CategoryId = post.CategoryId,
+                    CreatedAt = DateTime.Now
+                };
+                ctx.Posts.Add(newPost);
+                ctx.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.categoryId = new SelectList(ctx.Categories.ToList(), "Id", "CategoryName");
+
+            return View();
         }
 
         [HttpGet]
@@ -43,6 +65,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
 
             return View(postVm);
         }
+
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
@@ -56,12 +79,21 @@ namespace Yazaralemi.Areas.Admin.Controllers
                 post.Content = model.Content;
                 post.CategoryId = model.CategoryId;
                 ctx.SaveChanges();
-                //ctx.Entry(model).State = EntityState.Modified;
-                //ctx.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.categoryId = new SelectList(ctx.Categories.ToList(), "Id", "CategoryName");
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var post = ctx.Posts.Find(id);
+            if (post == null) return Json("failed");
+            ctx.Posts.Remove(post);
+            ctx.SaveChanges();
+
+            return Json("success");
         }
     }
 }
