@@ -56,6 +56,7 @@ namespace Yazaralemi.Migrations
                         Title = "Gezi Yazisi 1",
                         AuthorId = user.Id,
                         Content = @"<p>Maecenas finibus vel justo non mattis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent placerat est ac risus faucibus, vel eleifend felis luctus. Aliquam luctus sollicitudin quam, quis auctor est facilisis ac. Proin et molestie ipsum. Donec eu rutrum libero, sed efficitur nisl. Vestibulum feugiat, lectus ac volutpat sollicitudin, turpis sapien maximus ipsum, sit amet ultrices erat lacus non neque. Aliquam a ipsum at leo mattis volutpat.</p><p>        Maecenas et erat nisi. Nam pellentesque leo quam, eu malesuada nulla commodo ac. Aliquam aliquam, enim tincidunt varius laoreet, tellus orci egestas tortor, id vehicula lorem turpis ac turpis. Sed non odio mauris. Sed neque erat, fermentum aliquet semper sed, elementum quis eros. Cras sed felis neque. Cras dignissim lacus purus, eget hendrerit lacus auctor ut.</p>",
+                        ContentSummary = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor mi ut mauris fringilla hendrerit. Duis a nisi facilisis, porta nisl in, varius augue. Duis volutpat mollis dolor vitae sollicitudin. Nullam consectetur turpis tellus, id convallis ipsum auctor at. In consectetur ac nisi non porttitor. Cras ut nisi dui. Suspendisse sit amet facilisis enim.Donec maximus, lacus at elementum laoreet, nunc lorem efficitur lorem, a vehicula sem ipsum a tellus. Nullam vulputate felis eget cursus rutrum. Morbi eu lectus et tortor tempus aliquet eu id arcu. Sed quis elit iaculis, varius libero eget, sollicitudin nunc. Phasellus ut porta libero. Ut luctus tincidunt justo eget tempus metus.",
                         CreatedAt = DateTime.Now
                     });
 
@@ -64,6 +65,7 @@ namespace Yazaralemi.Migrations
                         Title = "Gezi Yazisi 2",
                         AuthorId = user.Id,
                         Content = @"<p>Maecenas finibus vel justo non mattis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent placerat est ac risus faucibus, vel eleifend felis luctus. Aliquam luctus sollicitudin quam, quis auctor est facilisis ac. Proin et molestie ipsum. Donec eu rutrum libero, sed efficitur nisl. Vestibulum feugiat, lectus ac volutpat sollicitudin, turpis sapien maximus ipsum, sit amet ultrices erat lacus non neque. Aliquam a ipsum at leo mattis volutpat.</p><p>        Maecenas et erat nisi. Nam pellentesque leo quam, eu malesuada nulla commodo ac. Aliquam aliquam, enim tincidunt varius laoreet, tellus orci egestas tortor, id vehicula lorem turpis ac turpis. Sed non odio mauris. Sed neque erat, fermentum aliquet semper sed, elementum quis eros. Cras sed felis neque. Cras dignissim lacus purus, eget hendrerit lacus auctor ut.</p>",
+                        ContentSummary = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor mi ut mauris fringilla hendrerit. Duis a nisi facilisis, porta nisl in, varius augue. Duis volutpat mollis dolor vitae sollicitudin. Nullam consectetur turpis tellus, id convallis ipsum auctor at. In consectetur ac nisi non porttitor. Cras ut nisi dui. Suspendisse sit amet facilisis enim.Donec maximus, lacus at elementum laoreet, nunc lorem efficitur lorem, a vehicula sem ipsum a tellus. Nullam vulputate felis eget cursus rutrum. Morbi eu lectus et tortor tempus aliquet eu id arcu. Sed quis elit iaculis, varius libero eget, sollicitudin nunc. Phasellus ut porta libero. Ut luctus tincidunt justo eget tempus metus.",
                         CreatedAt = DateTime.Now
                     });
 
@@ -80,6 +82,7 @@ namespace Yazaralemi.Migrations
                         Title = "Is Yazisi 1",
                         AuthorId = user.Id,
                         Content = @"<p>Maecenas finibus vel justo non mattis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent placerat est ac risus faucibus, vel eleifend felis luctus. Aliquam luctus sollicitudin quam, quis auctor est facilisis ac. Proin et molestie ipsum. Donec eu rutrum libero, sed efficitur nisl. Vestibulum feugiat, lectus ac volutpat sollicitudin, turpis sapien maximus ipsum, sit amet ultrices erat lacus non neque. Aliquam a ipsum at leo mattis volutpat.</p><p>        Maecenas et erat nisi. Nam pellentesque leo quam, eu malesuada nulla commodo ac. Aliquam aliquam, enim tincidunt varius laoreet, tellus orci egestas tortor, id vehicula lorem turpis ac turpis. Sed non odio mauris. Sed neque erat, fermentum aliquet semper sed, elementum quis eros. Cras sed felis neque. Cras dignissim lacus purus, eget hendrerit lacus auctor ut.</p>",
+                        ContentSummary = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor mi ut mauris fringilla hendrerit. Duis a nisi facilisis, porta nisl in, varius augue. Duis volutpat mollis dolor vitae sollicitudin. Nullam consectetur turpis tellus, id convallis ipsum auctor at. In consectetur ac nisi non porttitor. Cras ut nisi dui. Suspendisse sit amet facilisis enim.Donec maximus, lacus at elementum laoreet, nunc lorem efficitur lorem, a vehicula sem ipsum a tellus. Nullam vulputate felis eget cursus rutrum. Morbi eu lectus et tortor tempus aliquet eu id arcu. Sed quis elit iaculis, varius libero eget, sollicitudin nunc. Phasellus ut porta libero. Ut luctus tincidunt justo eget tempus metus.",
                         CreatedAt = DateTime.Now
                     });
 
@@ -89,6 +92,7 @@ namespace Yazaralemi.Migrations
                         Title = "Is Yazisi 2",
                         AuthorId = user.Id,
                         Content = @"<p>Maecenas finibus vel justo non mattis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent placerat est ac risus faucibus, vel eleifend felis luctus. Aliquam luctus sollicitudin quam, quis auctor est facilisis ac. Proin et molestie ipsum. Donec eu rutrum libero, sed efficitur nisl. Vestibulum feugiat, lectus ac volutpat sollicitudin, turpis sapien maximus ipsum, sit amet ultrices erat lacus non neque. Aliquam a ipsum at leo mattis volutpat.</p><p>        Maecenas et erat nisi. Nam pellentesque leo quam, eu malesuada nulla commodo ac. Aliquam aliquam, enim tincidunt varius laoreet, tellus orci egestas tortor, id vehicula lorem turpis ac turpis. Sed non odio mauris. Sed neque erat, fermentum aliquet semper sed, elementum quis eros. Cras sed felis neque. Cras dignissim lacus purus, eget hendrerit lacus auctor ut.</p>",
+                        ContentSummary = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor mi ut mauris fringilla hendrerit. Duis a nisi facilisis, porta nisl in, varius augue. Duis volutpat mollis dolor vitae sollicitudin. Nullam consectetur turpis tellus, id convallis ipsum auctor at. In consectetur ac nisi non porttitor. Cras ut nisi dui. Suspendisse sit amet facilisis enim.Donec maximus, lacus at elementum laoreet, nunc lorem efficitur lorem, a vehicula sem ipsum a tellus. Nullam vulputate felis eget cursus rutrum. Morbi eu lectus et tortor tempus aliquet eu id arcu. Sed quis elit iaculis, varius libero eget, sollicitudin nunc. Phasellus ut porta libero. Ut luctus tincidunt justo eget tempus metus.",
                         CreatedAt = DateTime.Now
                     });
 
@@ -106,7 +110,8 @@ namespace Yazaralemi.Migrations
                 ApplicationUser admin = context.Users.Where(x => x.UserName == email).FirstOrDefault();
                 if (admin != null)
                 {
-                    if (!context.Categories.Any(x => x.CategoryName == catName)){
+                    if (!context.Categories.Any(x => x.CategoryName == catName))
+                    {
                         Category diger = new Category
                         {
                             CategoryName = catName,
@@ -120,7 +125,8 @@ namespace Yazaralemi.Migrations
                                 Title = "Gezi Yazisi " + i,
                                 AuthorId = admin.Id,
                                 Content = @"<p>Maecenas finibus vel justo non mattis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent placerat est ac risus faucibus, vel eleifend felis luctus. Aliquam luctus sollicitudin quam, quis auctor est facilisis ac. Proin et molestie ipsum. Donec eu rutrum libero, sed efficitur nisl. Vestibulum feugiat, lectus ac volutpat sollicitudin, turpis sapien maximus ipsum, sit amet ultrices erat lacus non neque. Aliquam a ipsum at leo mattis volutpat.</p><p>        Maecenas et erat nisi. Nam pellentesque leo quam, eu malesuada nulla commodo ac. Aliquam aliquam, enim tincidunt varius laoreet, tellus orci egestas tortor, id vehicula lorem turpis ac turpis. Sed non odio mauris. Sed neque erat, fermentum aliquet semper sed, elementum quis eros. Cras sed felis neque. Cras dignissim lacus purus, eget hendrerit lacus auctor ut.</p>",
-                                CreatedAt = DateTime.Now.AddMinutes(i)
+                                ContentSummary = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor mi ut mauris fringilla hendrerit. Duis a nisi facilisis, porta nisl in, varius augue. Duis volutpat mollis dolor vitae sollicitudin. Nullam consectetur turpis tellus, id convallis ipsum auctor at. In consectetur ac nisi non porttitor. Cras ut nisi dui. Suspendisse sit amet facilisis enim.Donec maximus, lacus at elementum laoreet, nunc lorem efficitur lorem, a vehicula sem ipsum a tellus. Nullam vulputate felis eget cursus rutrum. Morbi eu lectus et tortor tempus aliquet eu id arcu. Sed quis elit iaculis, varius libero eget, sollicitudin nunc. Phasellus ut porta libero. Ut luctus tincidunt justo eget tempus metus.",
+                                CreatedAt = DateTime.Now.AddSeconds(i)
                             });
                         }
                         context.Categories.Add(diger);

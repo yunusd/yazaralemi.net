@@ -39,6 +39,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
                     AuthorId = ctx.Users.Find(User.Identity.GetUserId()).Id,
                     Title = post.Title,
                     Content = post.Content,
+                    ContentSummary = post.ContentSummary,
                     CategoryId = post.CategoryId,
                     CreatedAt = DateTime.Now
                 };
@@ -59,6 +60,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
                 Id = x.Id,
                 Title = x.Title,
                 Content = x.Content,
+                ContentSummary = x.ContentSummary,
                 CategoryId = x.CategoryId,
             }).FirstOrDefault(x => x.Id == id);
             if (postVm == null) return HttpNotFound();
@@ -78,6 +80,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
                 post.Title = model.Title;
                 post.Content = model.Content;
                 post.CategoryId = model.CategoryId;
+                post.ContentSummary = model.ContentSummary;
                 ctx.SaveChanges();
                 return RedirectToAction("Index");
             }

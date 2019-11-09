@@ -3,6 +3,7 @@
     ViewBag.Title = Model.Title;
     ViewBag.Identifier = $"{Model.Id}{Model.CategoryId}{Model.CreatedAt.Value.ToBinary()}";
     ViewBag.DisqUrl = $"{@HttpContext.Current.Request.Url}";
+
 }
 
 
@@ -11,15 +12,18 @@
         <h2>@Model.Title</h2>
     </h2>
     <p class="blog-post-meta" title="@Model.CreatedAt.Value"><a href="#" class="text-secondary">@Model.Author.UserName</a> tarafından @Model.CreatedAt.Value.ToShortDateString() tarihinde yazıldı</p>
-    @Html.Raw(Model.Content)
-
+    <div class="blog-post-content">
+        @Html.Raw(Model.Content)
+    </div>
+    <br />
+    <hr />
+    <div class="blog-post-comment">
+        <h4>Yorumlar</h4>
+        <hr />
+        <div id="disqus_thread"></div>
+    </div>
 </div>
-<h4>Yorumlar</h4>
-<hr />
 
-<div class="blog-post-comment">
-    <div id="disqus_thread"></div>
-</div>
 
 @section scripts{
     <script>

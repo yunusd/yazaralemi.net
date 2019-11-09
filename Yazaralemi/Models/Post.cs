@@ -28,6 +28,8 @@ namespace Yazaralemi.Models
         [Display(Name = "İçerik")]
         public string Content { get; set; }
 
+        public string ContentSummary { get; set; }
+
         [Required]
         public DateTime? CreatedAt { get; set; }
 

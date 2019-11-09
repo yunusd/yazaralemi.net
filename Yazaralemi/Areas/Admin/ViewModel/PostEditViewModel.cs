@@ -21,5 +21,8 @@ namespace Yazaralemi.Areas.Admin.ViewModel
 
         [Display(Name = "İçerik")]
         public string Content { get; set; }
+
+        [Required]
+        public string ContentSummary { get; set; }
     }
 }

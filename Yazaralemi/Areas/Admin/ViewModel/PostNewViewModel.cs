@@ -20,5 +20,8 @@ namespace Yazaralemi.Areas.Admin.ViewModel
         [Required(ErrorMessage = "{0} gerekli!")]
         [Display(Name = "İçerik")]
         public string Content { get; set; }
+
+        [Required]
+        public string ContentSummary { get; set; }
     }
 }

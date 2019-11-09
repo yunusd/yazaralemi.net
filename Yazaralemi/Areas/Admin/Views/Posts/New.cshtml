@@ -7,6 +7,7 @@
 @using (Html.BeginForm("New", "Posts", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.ContentSummary, new { id = "contentSummary" })
     <div class="card card-primary card-outline">
         <div class="card-body">
             <div class="row">
@@ -32,8 +33,7 @@
         <div class="card-footer">
             <div class="float-right">
                 <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Taslak</button>
-                <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Gönder</button>
-
+                <button type="submit" id="sendPost" class="btn btn-primary"><i class="far fa-envelope"></i> Gönder</button>
             </div>
             <a href="@Url.Action("Index","Posts")" class="btn btn-default"><i class="fas fa-times"></i> Vazgeç</a>
         </div>
@@ -49,6 +49,12 @@
             //Add text editor
             $('#compose-textarea').summernote({
                 "lang": "tr-TR"
+            });
+
+            //take plain text from editor and slice first 700 chars and put it hidden input
+            $('#sendPost').click(function () {
+                let plainText = $($("#compose-textarea").summernote('code')).text()
+                $('#contentSummary').attr('value', plainText.slice(0, 700) + '...')
             })
         })
     </script>

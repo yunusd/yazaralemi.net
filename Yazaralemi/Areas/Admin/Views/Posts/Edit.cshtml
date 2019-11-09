@@ -8,11 +8,12 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ContentSummary, new { id = "contentSummary" })
     <div class="card card-primary card-outline">
         @*todo: yazıyı sitede görüntüle butonu eklenecek*@
         @*<div class="card-header">
-            <a href="#" class="btn btn-outline-secondary w-100">Yazıyı sitede görüntüle</a>
-        </div>*@
+                <a href="#" class="btn btn-outline-secondary w-100">Yazıyı sitede görüntüle</a>
+            </div>*@
         <!-- /.card-header -->
         <div class="card-body">
             <div class="row">
@@ -55,6 +56,12 @@
             //Add text editor
             $('#compose-textarea').summernote({
                 "lang": "tr-TR"
+            })
+
+            //take plain text from editor and slice first 700 chars and put hidden input
+            $('#sendPost').click(function () {
+                let plainText = $($("#compose-textarea").summernote('code')).text()
+                $('#contentSummary').attr('value', plainText.slice(0, 700) + '...')
             })
         })
     </script>
