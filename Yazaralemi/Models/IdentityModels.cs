@@ -17,8 +17,18 @@ namespace Yazaralemi.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+            userIdentity.AddClaim(new Claim("FullName", $"{this.FirstName} {this.LastName}"));
             return userIdentity;
         }
+
+        [StringLength(25)]
+        public string FirstName { get; set; }
+
+        [StringLength(25)]
+        public string LastName { get; set; }
+
+        public bool IsGettingStartedSeen { get; set; }
+
         [StringLength(100)]
         public string Photo { get; set; }
 
@@ -43,7 +53,7 @@ namespace Yazaralemi.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            
+
         }
 
         public DbSet<Category> Categories { get; set; }

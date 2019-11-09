@@ -70,6 +70,16 @@ namespace Yazaralemi.Models
         public string Email { get; set; }
 
         [Required]
+        [StringLength(25)]
+        [Display(Name = "Ad")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(25)]
+        [Display(Name = "Soyad")]
+        public string LastName { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "{0} en az {2} karakter uzunluğunda olmalı.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Parola")]

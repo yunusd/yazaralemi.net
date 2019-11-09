@@ -35,13 +35,13 @@ namespace Yazaralemi.Migrations
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = email, Email = email };
+                var user = new ApplicationUser { UserName = email, Email = email, FirstName = "Yunus", LastName = "Demirpolat" };
 
                 manager.Create(user, password);
                 manager.AddToRole(user.Id, "admin");
 
                 //Olusturulan bu kullaniciya ait yazilar ekler
-                #region Kategoriler ve Yazýlar
+                #region Kategoriler ve Yazilar
                 if (!context.Categories.Any())
                 {
                     Category cat1 = new Category

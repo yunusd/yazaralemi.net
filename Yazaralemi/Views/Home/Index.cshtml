@@ -14,7 +14,7 @@
         <h2 class="blog-post-title">
             <a href="@Url.Action("Index","Post", new { cid = post.CategoryId, pid = post.Id })" class="text-reset">@post.Title</a>
         </h2>
-        <p class="blog-post-meta" title="@post.CreatedAt.Value"><a href="#" class="text-secondary">@post.Author.UserName</a> tarafından @post.CreatedAt.Value.ToShortDateString() tarihinde yazıldı</p>
+        <p class="blog-post-meta" title="@post.CreatedAt.Value"><a href="#" class="text-secondary">@post.Author.FirstName @post.Author.LastName</a> tarafından @post.CreatedAt.Value.ToShortDateString() tarihinde yazıldı</p>
         <p class="blog-post-content-summary">
             @post.ContentSummary
             <br />
