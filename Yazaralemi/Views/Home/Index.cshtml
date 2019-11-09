@@ -8,13 +8,14 @@
 <h3 class="pb-4 mb-4 font-italic border-bottom">
     @ViewBag.Subtitle
 </h3>
-
 <div class="blog-post">
     @foreach (var item in Model)
     {
-        <h2 class="blog-post-title">@item.Title</h2>
-        <p class="blog-post-meta" title="@item.CreatedAt.Value"><a href="#">@item.Author.UserName</a> tarafından @item.CreatedAt.Value.ToShortDateString() tarihinde yazıldı</p>
-          @Html.Raw(item.Content);
+        <h2 class="blog-post-title">
+            <a href="@Url.Action("Index","Post", new { cid = item.CategoryId, pid = item.Id })" class="text-reset">@item.Title</a>
+        </h2>
+        <p class="blog-post-meta" title="@item.CreatedAt.Value"><a href="#" class="text-secondary">@item.Author.UserName</a> tarafından @item.CreatedAt.Value.ToShortDateString() tarihinde yazıldı</p>
+        @Html.Raw(item.Content);
     }
 </div><!-- /.blog-post -->
 

@@ -1,0 +1,38 @@
+﻿@model Post
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.Identifier = $"{Model.Id}{Model.CategoryId}{Model.CreatedAt.Value.ToBinary()}";
+    ViewBag.DisqUrl = $"{@HttpContext.Current.Request.Url}";
+}
+
+
+<div class="blog-post">
+    <h2 class="blog-post-title">
+        <h2>@Model.Title</h2>
+    </h2>
+    <p class="blog-post-meta" title="@Model.CreatedAt.Value"><a href="#" class="text-secondary">@Model.Author.UserName</a> tarafından @Model.CreatedAt.Value.ToShortDateString() tarihinde yazıldı</p>
+    @Html.Raw(Model.Content)
+
+</div>
+<h4>Yorumlar</h4>
+<hr />
+
+<div class="blog-post-comment">
+    <div id="disqus_thread"></div>
+</div>
+
+@section scripts{
+    <script>
+        var disqus_config = function () {
+        this.page.url = '@ViewBag.DisqUrl';
+        this.page.identifier = '@ViewBag.Identifier';
+        };
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://yazaralaemi.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Yorumları görüntüleyebilmek için lütfen javascript'i etkinleştirin</noscript>
+}
