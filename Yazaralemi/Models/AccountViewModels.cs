@@ -69,12 +69,10 @@ namespace Yazaralemi.Models
         [Display(Name = "E-Posta")]
         public string Email { get; set; }
 
-        [Required]
         [StringLength(25)]
         [Display(Name = "Ad")]
         public string FirstName { get; set; }
 
-        [Required]
         [StringLength(25)]
         [Display(Name = "Soyad")]
         public string LastName { get; set; }

@@ -56,5 +56,20 @@ namespace Yazaralemi.Controllers
         {
             return PartialView("_CategoriesPartial", ctx.Categories.ToList());
         }
+
+        public ActionResult SiteNamePartial()
+        {
+            return PartialView("_SiteNamePartial", ctx.SiteInfos.SingleOrDefault());
+        }
+
+        public ActionResult AboutPartial()
+        {
+            return PartialView("_AboutPartial", ctx.SiteInfos.SingleOrDefault());
+        }
+
+        public ActionResult FooterPartial()
+        {
+            return PartialView("_FooterPartial", ctx.SiteInfos.SingleOrDefault());
+        }
     }
 }

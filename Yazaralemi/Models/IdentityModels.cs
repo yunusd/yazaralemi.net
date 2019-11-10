@@ -17,7 +17,15 @@ namespace Yazaralemi.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
-            userIdentity.AddClaim(new Claim("FullName", $"{this.FirstName} {this.LastName}"));
+            if (string.IsNullOrEmpty(this.FirstName) || string.IsNullOrEmpty(this.LastName))
+            {
+                userIdentity.AddClaim(new Claim("FullName", $"{this.Email}"));
+            }
+            else
+            {
+                userIdentity.AddClaim(new Claim("FullName", $"{this.FirstName} {this.LastName}"));
+            }
+
             return userIdentity;
         }
 
@@ -26,8 +34,6 @@ namespace Yazaralemi.Models
 
         [StringLength(25)]
         public string LastName { get; set; }
-
-        public bool IsGettingStartedSeen { get; set; }
 
         [StringLength(100)]
         public string Photo { get; set; }
@@ -59,5 +65,7 @@ namespace Yazaralemi.Models
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<SiteInfo> SiteInfos { get; set; }
     }
 }

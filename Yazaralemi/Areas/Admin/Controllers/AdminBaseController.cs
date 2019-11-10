@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Yazaralemi.Areas.Admin.Attributes;
 using Yazaralemi.Models;
 
 namespace Yazaralemi.Areas.Admin.Controllers
 {
     [Authorize(Roles = "admin")]
+    [GettingStarted]
     public class AdminBaseController : Controller
     {
         protected ApplicationDbContext ctx = new ApplicationDbContext();

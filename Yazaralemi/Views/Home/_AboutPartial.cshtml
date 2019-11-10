@@ -1,0 +1,10 @@
+﻿@model SiteInfo
+
+@if (Model != null)
+{
+    @Html.Raw(Model.About);
+}
+else
+{
+    @Html.Raw("placeholder");
+}
