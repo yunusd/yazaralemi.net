@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Yazaralemi.Attribute
+namespace Yazaralemi.Attributes
 {
     public class ProfilePhotoAttribute : ValidationAttribute
     {

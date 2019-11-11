@@ -18,6 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Areas/Admin/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="~/Areas/Admin/plugins/summernote/summernote-bs4.css">
+    <link rel="stylesheet" href="~/Areas/Admin/plugins/toastr/toastr.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -187,6 +188,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <p>Yazılar</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Categories")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kategoriler</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -222,11 +229,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a href="@Url.Action("Index", Html.ControllerName())">
-                                        @Html.ControllerName()
+                                        @Html.PrettyControllerName()
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    @Html.ActionName()
+                                    @Html.PrettyActionName()
                                 </li>
                             </ol>
                         </div><!-- /.col -->
@@ -274,6 +281,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="~/Areas/Admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
     <script src="~/Areas/Admin/plugins/summernote/summernote-bs4.min.js"></script>
     <script src="~/Areas/Admin/plugins/summernote/lang/summernote-tr-TR.js"></script>
+    <script src="~/Areas/Admin/plugins/toastr/toastr.min.js"></script>
     @RenderSection("scripts", false)
 </body>
 </html>

@@ -1,0 +1,26 @@
+﻿@model Category
+@{
+    ViewBag.Title = "Yeni Kategori";
+    ViewBag.HeaderTitle = "Yeni Kategori";
+}
+
+<div class="card card-primary">
+    <!-- /.card-header -->
+    <!-- form start -->
+    @using (Html.BeginForm("New", "Categories", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-body">
+            <div class="form-group">
+                @Html.LabelFor(x => x.CategoryName)
+                @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control", placeholder = "Kategori Adı" })
+                @Html.ValidationMessageFor(x => x.CategoryName, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    }
+</div>
+<!-- /.card -->

@@ -8,20 +8,24 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Yazaralemi.Areas.Admin.ViewModel;
+using Yazaralemi.Attributes;
 using Yazaralemi.Models;
 
 namespace Yazaralemi.Areas.Admin.Controllers
 {
+    [Breadcrumb("Gönderiler")]
     public class PostsController : AdminBaseController
     {
         // GET: Admin/Posts
         [HttpGet]
+        [Breadcrumb("İndeks")]
         public ActionResult Index()
         {
             return View(ctx.Posts.ToList());
         }
 
         [HttpGet]
+        [Breadcrumb("Yeni")]
         public ActionResult New()
         {
             ViewBag.categoryId = new SelectList(ctx.Categories.ToList(), "Id", "CategoryName");
@@ -53,6 +57,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Breadcrumb("Düzenle")]
         public ActionResult Edit(int id)
         {
             ViewBag.categoryId = new SelectList(ctx.Categories.ToList(), "Id", "CategoryName");

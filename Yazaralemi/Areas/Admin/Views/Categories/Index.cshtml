@@ -1,0 +1,115 @@
+﻿@model List<Category>
+@{
+    ViewBag.Title = "Kategoriler";
+    ViewBag.HeaderTitle = "Kategorileri Listele";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Kategorileri Listele</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <a href="@Url.Action("New", "Categories")" class="btn btn-outline-success w-100 mb-3">
+            <i class="fas fa-plus"></i>
+            Yeni Kategori
+        </a>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Kategori Adı</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr data-category-id="@category.Id">
+                        <td>@category.Id</td>
+                        <td>@category.CategoryName</td>
+                        <td>
+                            <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal" data-category-name="@category.CategoryName" data-category-id="@category.Id">Sil</a>
+                            <a href="@Url.Action("Edit","Categories", new { id = category.Id })" class="btn btn-info">Düzenle</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Kategori Adı</th>
+                    <th>İşlemler</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Silme Onayı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="modalCategoryId" />
+                "<span id="modalCategoryName">x</span>" başlıklı kategoriyi silmek istediğinize emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Vazgeç</button>
+                <button type="button" class="btn btn-outline-danger" id="modalButtonDelete">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(function () {
+            @if(TempData["successMessage"] != null)
+            {
+                <text>toastr.success("@TempData["successMessage"]")</text>
+            }
+            var table = $("#example1").DataTable({
+                "language": {
+                    "url": "@Url.Content("~/Areas/Admin/plugins/datatables/Turkish.json")"
+                }
+            });
+
+            // sil modalı gözükürken tetiklenen event:
+            $("#exampleModal").on("show.bs.modal", function (event) {
+                var btnSil = $(event.relatedTarget);
+                var modal = $(this);
+                $("#modalCategoryId").val(btnSil.data("category-id"));
+                $("#modalCategoryName").text(btnSil.data("category-name"));
+            });
+
+            $("#modalButtonDelete").click(function () {
+                var id = $("#modalCategoryId").val();
+
+                $.ajax({
+                    url: "@Url.Action("Delete", "Categories")",
+                    method: "post",
+                    data: { id },
+                    success: function (result) {
+                        if (result.success) {
+                            var tr = $(`tr[data-category-id=${id}]`);
+                            table.row(tr).remove().draw(false);
+                            $("#exampleModal").modal("hide");
+                        } else {
+                            alert(result.error);
+                        }
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            });
+        });
+    </script>
+}
