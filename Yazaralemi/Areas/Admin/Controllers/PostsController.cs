@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Yazaralemi.Areas.Admin.ViewModel;
@@ -96,6 +98,21 @@ namespace Yazaralemi.Areas.Admin.Controllers
             ctx.SaveChanges();
 
             return Json("success");
+        }
+
+        [HttpPost]
+        public ActionResult AjaxImageUpload(HttpPostedFileBase file)
+        {                                                                 
+            if (file == null || file.ContentLength == 0 || !file.ContentType.StartsWith("image/"))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var saveFolderPath = Server.MapPath("~/Upload/Posts");
+            var ext = Path.GetExtension(file.FileName);
+            var saveFileName = Guid.NewGuid() + ext;
+            var saveFilePath = Path.Combine(saveFolderPath, saveFileName);
+            file.SaveAs(saveFilePath);
+
+            return Json(new { url = Url.Content($"~/Upload/Posts/{saveFileName}")});
         }
     }
 }

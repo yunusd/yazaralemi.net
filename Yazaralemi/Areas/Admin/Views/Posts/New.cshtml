@@ -49,8 +49,37 @@
         $(function () {
             //Add text editor
             $('#compose-textarea').summernote({
-                "lang": "tr-TR"
-            })
-        })
+                lang: "tr-TR",
+                height: 300,
+                placeholder: "Bir şeyler yazınız..",
+                // https://stackoverflow.com/questions/21628222/summernote-image-upload
+                callbacks: {
+                    onImageUpload: function (files) {
+                        uploadFile(files[0]);
+                    }
+                }
+            });
+
+            function uploadFile(file) {
+                var data = new FormData();
+                data.append("file", file);
+                $.ajax({
+                    type: "post",
+                    url: "@Url.Action("AjaxImageUpload", "Posts")",
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        $('#compose-textarea').summernote("insertImage", data.url);
+                        console.log(data);
+                    },
+                    error: function (data) {
+                        console.log("error");
+                        console.log(data);
+                    }
+                });
+            }
+        });
     </script>
 }
