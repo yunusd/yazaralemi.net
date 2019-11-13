@@ -1,0 +1,24 @@
+﻿@model SendCommentViewModel
+<div class="card my-4">
+    <h5 class="card-header">Yorum Yaz:</h5>
+    <div class="card-body">
+        <form name="comment-form">
+            @Html.AntiForgeryToken()
+            @Html.Hidden("PostId", Model.PostId)
+            @Html.Hidden("ParentId")
+            <div class="error"></div>
+            <div class="form-group text-danger">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <input name="AuthorName" class="form-control" type="text" value="" placeholder="Ad Soyad" required />
+                    </div>
+                    <div class="col-md-6">
+                        <input name="AuthorEmail" class="form-control" type="email" value="" placeholder="E-Posta" required />
+                    </div>
+                </div>
+                <textarea name="Content" class="form-control" rows="3" placeholder="Yorum" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary comment-submit">Gönder</button>
+        </form>
+    </div>
+</div>

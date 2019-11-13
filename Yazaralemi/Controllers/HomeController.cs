@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Yazaralemi.Models;
+using Yazaralemi.ViewModels;
 
 namespace Yazaralemi.Controllers
 {
@@ -29,11 +31,46 @@ namespace Yazaralemi.Controllers
             if (cid != null)
                 result = result.Where(x => x.CategoryId == cid);
 
-            if(result.Count() <= 0)
+            if (result.Count() <= 0)
                 return PartialView("_NotFound");
 
             ViewBag.pageCount = Math.Ceiling(result.Count() / (decimal)postPerPage);
             return View(result.OrderByDescending(x => x.CreatedAt).Skip((page - 1) * postPerPage).Take(postPerPage).ToList());
+        }
+
+        public ActionResult ShowPost(int id)
+        {
+            var post = ctx.Posts.Find(id);
+            if (post == null)
+                return HttpNotFound();
+            return View(post);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendComment(SendCommentViewModel comment)
+        {
+
+            if (ModelState.IsValid)
+            {
+                Comment newComment = new Comment
+                {
+                    AuthorId = User.Identity.GetUserId(),
+                    AuthorName = comment.AuthorName,
+                    AuthorEmail = comment.AuthorEmail,
+                    Content = comment.Content,
+                    CreatedAt = DateTime.Now,
+                    ParentId = comment.ParentId,
+                    PostId = comment.PostId
+                };
+
+                ctx.Comments.Add(newComment);
+                ctx.SaveChanges();
+                return Json(newComment);
+            }
+            var errorList = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+
+            return Json(new { Errors = errorList });
         }
 
         public ActionResult About()

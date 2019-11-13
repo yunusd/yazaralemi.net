@@ -19,15 +19,21 @@ namespace Yazaralemi
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new StyleBundle("~/bundles/js").Include(
+                "~/Scripts/toastr.js"
+                ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/fontawesome-all.css",
+                      "~/Content/toastr.min.css",
                       "~/Content/site.css"));
-            #if DEBUG
+
+#if DEBUG
             BundleTable.EnableOptimizations = false;
-            #else
+#else
             BundleTable.EnableOptimizations = true;
-            #endif
+#endif
         }
     }
 }

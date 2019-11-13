@@ -7,33 +7,39 @@ using System.Web;
 
 namespace Yazaralemi.Models
 {
-    public class Post
+    public class Comment
     {
         public int Id { get; set; }
 
-        [Required]
+        [ForeignKey("Parent")]
+        public int? ParentId { get; set; }
+
+        [ForeignKey("Post")]
+        public int? PostId { get; set; }
+
         [ForeignKey("Author")]
-        [Display(Name = "Yazar")]
         public string AuthorId { get; set; }
 
-        [Required]
-        [Display(Name ="Kategori")]
-        public int CategoryId { get; set; }
+        [StringLength(50)]
+        public string AuthorName { get; set; }
 
         [Required]
         [StringLength(200)]
-        [Display(Name = "Başlık")]
-        public string Title { get; set; }
+        [EmailAddress]
+        public string AuthorEmail { get; set; }
 
-        [Display(Name = "İçerik")]
         public string Content { get; set; }
 
         [Required]
         public DateTime? CreatedAt { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
-        public virtual Category Category { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual Comment Parent { get; set; }
+
+        public virtual Post Post { get; set; }
+
+        public virtual ICollection<Comment> Replies { get; set; }
+
     }
 }

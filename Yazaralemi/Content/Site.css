@@ -148,6 +148,24 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 100%;
 }
 
+/**
+* Comment
+*/
+
+.comment-highlight {
+    animation: colorchange 3s;
+}
+
+@keyframes colorchange {
+    0% {
+        background-color: cornsilk;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
 /*
  * Footer
  */

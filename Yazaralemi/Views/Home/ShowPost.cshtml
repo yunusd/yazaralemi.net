@@ -1,0 +1,112 @@
+﻿@model Post
+@{
+    /**/
+
+    ViewBag.Title = Model.Title;
+}
+
+<div class="blog-post">
+    <h2 class="blog-post-title">
+        <h2>@Model.Title</h2>
+    </h2>
+    <p class="blog-post-meta" title="@Model.CreatedAt.Value"><a href="#" class="text-secondary">@Model.Author.UserName</a> tarafından @Model.CreatedAt.Value.ToShortDateString() tarihinde yazıldı</p>
+    <div class="blog-post-content">
+        @Html.ShowPost(Model.Content, true)
+    </div>
+</div>
+
+<!-- Comments Form -->
+@Html.Partial("_NewComment", new SendCommentViewModel { PostId = Model.Id })
+
+<div class="card mb-4" id="comments">
+    <div class="card-header">
+        Yorumlar
+    </div>
+    <div class="card-body">
+        @if (Model.Comments.Count == 0)
+        {
+            <div class="text-center text-secondary">
+                Bu yazıya henüz hiç yorum yapılmamış
+            </div>
+        }
+
+        @foreach (var comment in Model.Comments.Where(x => x.ParentId == null))
+        {
+            <!-- Comment with nested comments -->
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body" id="comment-@comment.Id">
+                    <h5 class="mt-0">@comment.AuthorName</h5>
+                    @comment.Content
+                    <div class="text-right">
+                        <a href="#" class="btn btn-outline-secondary comment-reply-link" data-comment-id="@comment.Id">
+                            Cevapla
+                        </a>
+                    </div>
+                    <div class="comment-reply-form"></div>
+
+                    @foreach (var reply in comment.Replies)
+                    {
+                        <div class="media mt-4" id="comment-@reply.Id">
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            <div class="media-body">
+                                <h5 class="mt-0">@reply.AuthorName</h5>
+                                @reply.Content
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            if (location.hash) {
+                var hash = location.hash;
+
+                if ($(hash).length) {
+                    $(hash).addClass("comment-highlight");
+                    scrollTo(0, $(hash).offset().top - innerHeight / 2 + 50);
+                }
+            }
+            if (sessionStorage.getItem("success")) {
+                toastr.success(sessionStorage.getItem("success"))
+                sessionStorage.clear();
+            }
+        });
+
+        $(".comment-reply-link").click(function (event) {
+            event.preventDefault();
+            $(".comment-reply-form").html("");
+            var commentId = $(this).data("comment-id")
+            
+            var commentForm = $(this).parent().next().html(`@Html.Partial("_NewComment", new SendCommentViewModel { PostId = Model.Id })`);
+
+            commentForm.find('input[name="ParentId"]').val(commentId);
+        })
+
+        $('body').on("submit", 'form[name="comment-form"]', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                method: "post",
+                url: '@Url.Action("SendComment", "Home")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.Errors) {
+                        toastr.error(res.Errors[0])
+                    } else {
+                        window.location.hash = `#comment-${res.Id}`
+                        window.sessionStorage.setItem("success", "Yorumunuz başarıyla eklendi!");
+                        window.location.reload();
+                    }
+                }
+            })
+        })
+    </script>
+}

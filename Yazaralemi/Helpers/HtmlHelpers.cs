@@ -48,5 +48,18 @@ namespace Yazaralemi.Helpers
 
             return ba.Name;
         }
+
+        public static IHtmlString ShowPost(this HtmlHelper htmlHelper, string content, bool full = false)
+        {
+            var element = "<hr>";
+            var pos = content.IndexOf(element);
+            if ( pos == -1)
+                return htmlHelper.Raw(content);
+
+            if (full)
+                return htmlHelper.Raw(content.Remove(pos, element.Length));
+
+            return htmlHelper.Raw(content.Substring(0, pos));
+        }
     }
 }
