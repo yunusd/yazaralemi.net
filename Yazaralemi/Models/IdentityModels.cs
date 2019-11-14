@@ -12,6 +12,11 @@ namespace Yazaralemi.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            IsEnabled = true; // default 
+        }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -21,6 +26,8 @@ namespace Yazaralemi.Models
         }
         [StringLength(100)]
         public string Photo { get; set; }
+
+        public bool IsEnabled { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
 

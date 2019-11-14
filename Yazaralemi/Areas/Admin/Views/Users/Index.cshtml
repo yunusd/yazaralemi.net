@@ -1,0 +1,68 @@
+﻿@model List<ApplicationUser>
+
+@{
+    ViewBag.Title = "Kullanıcılar";
+    ViewBag.HeaderTitle = "Kullanıcılar";
+}
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Select((value, i) => new { i, value }))
+                {
+                    <tr>
+                        <td>@(user.i + 1)</td>
+                        <td>@user.value.UserName</td>
+                        <td>
+                            @Html.CheckBox("IsEnabled", Model[user.i].IsEnabled,
+                            new {
+                                data_Bootstrap_Switch = "",
+                                data_off_color = "danger",
+                                data_on_color = "success",
+                                data_off_text = "hayıt",
+                                data_on_text = "Evet",
+                                data_user_id = user.value.Id,
+                            })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var table = $(".table").DataTable({
+            "language": {
+                "url": "@Url.Content("~/Areas/Admin/plugins/datatables/Turkish.json")"
+            }
+        });
+        var adminId = "@User.Identity.GetUserId()";
+        $(`input:checkbox[data-user-id="${adminId}"]`).attr("disabled", "disabled");
+        $("input[data-bootstrap-switch]").bootstrapSwitch({
+            size: "small",
+            onSwitchChange: function (event, state) {
+                var userId = $(this).data("user-id");
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("ChangeStatus","Users")',
+                    data: { UserId: userId, IsEnabled: state},
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.reload()
+                        }
+                    }
+                })
+            }
+        });
+    </script>
+}

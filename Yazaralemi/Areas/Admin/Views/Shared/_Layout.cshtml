@@ -17,6 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/Areas/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Areas/Admin/dist/css/adminlte.min.css">
+    <link href="~/Areas/Admin/plugins/bootstrap-switch/css/bootstrap4/bootstrap-switch.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Areas/Admin/plugins/summernote/summernote-bs4.css">
     <link rel="stylesheet" href="~/Areas/Admin/plugins/toastr/toastr.min.css">
     <!-- Google Font: Source Sans Pro -->
@@ -157,7 +158,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="~/Areas/Admin/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">@User.Identity.Name.Split('@')[0]</a>
+                        <a href="@Url.Action("Index", "Manage", new { area = ""})" class="d-block">@User.Identity.Name.Split('@')[0]</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -183,27 +184,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a href="@Url.Action("Index","Categories")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kategoriler</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="@Url.Action("Index","Posts")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Yazılar</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index","Categories")" class="nav-link">
+                                    <a href="@Url.Action("Index","Comments")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Kategoriler</p>
+                                        <p>Yorumlar</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Users")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kullanıcılar</p>
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Simple Link
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -282,6 +286,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="~/Areas/Admin/plugins/summernote/summernote-bs4.min.js"></script>
     <script src="~/Areas/Admin/plugins/summernote/lang/summernote-tr-TR.js"></script>
     <script src="~/Areas/Admin/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Areas/Admin/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     @RenderSection("scripts", false)
 </body>
 </html>
