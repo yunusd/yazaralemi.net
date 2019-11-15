@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Yazaralemi.Areas.Admin.ViewModel;
 using Yazaralemi.Attributes;
 using Yazaralemi.Models;
+using Yazaralemi.Utility;
 
 namespace Yazaralemi.Areas.Admin.Controllers
 {
@@ -67,6 +68,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
                 Title = x.Title,
                 Content = x.Content,
                 CategoryId = x.CategoryId,
+                Slug = x.Slug,
             }).FirstOrDefault(x => x.Id == id);
             if (postVm == null) return HttpNotFound();
 
@@ -85,6 +87,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
                 post.Title = model.Title;
                 post.Content = model.Content;
                 post.CategoryId = model.CategoryId;
+                post.Slug = model.Slug;
                 ctx.SaveChanges();
                 //ctx.Entry(model).State = EntityState.Modified;
                 //ctx.SaveChanges();
@@ -107,7 +110,7 @@ namespace Yazaralemi.Areas.Admin.Controllers
 
         [HttpPost]
         public ActionResult AjaxImageUpload(HttpPostedFileBase file)
-        {                                                                 
+        {
             if (file == null || file.ContentLength == 0 || !file.ContentType.StartsWith("image/"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -117,7 +120,13 @@ namespace Yazaralemi.Areas.Admin.Controllers
             var saveFilePath = Path.Combine(saveFolderPath, saveFileName);
             file.SaveAs(saveFilePath);
 
-            return Json(new { url = Url.Content($"~/Upload/Posts/{saveFileName}")});
+            return Json(new { url = Url.Content($"~/Upload/Posts/{saveFileName}") });
+        }
+
+        [HttpPost]
+        public ActionResult GenerateSlug(string title)
+        {
+            return Json(UrlService.URLFriendly(title));
         }
     }
 }

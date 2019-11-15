@@ -8,6 +8,7 @@ namespace Yazaralemi.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Yazaralemi.Models;
+    using Yazaralemi.Utility;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Yazaralemi.Models.ApplicationDbContext>
     {
@@ -18,6 +19,9 @@ namespace Yazaralemi.Migrations
 
         protected override void Seed(Yazaralemi.Models.ApplicationDbContext context)
         {
+            var autoGenerateSlugs = false;
+            var autoGenerateSlugsAll = false;
+
             string email = "yunusdemirpolatt@gmail.com";
             string password = "123456";
 
@@ -106,7 +110,8 @@ namespace Yazaralemi.Migrations
                 ApplicationUser admin = context.Users.Where(x => x.UserName == email).FirstOrDefault();
                 if (admin != null)
                 {
-                    if (!context.Categories.Any(x => x.CategoryName == catName)){
+                    if (!context.Categories.Any(x => x.CategoryName == catName))
+                    {
                         Category diger = new Category
                         {
                             CategoryName = catName,
@@ -124,6 +129,27 @@ namespace Yazaralemi.Migrations
                             });
                         }
                         context.Categories.Add(diger);
+                    }
+                }
+            }
+            #endregion
+
+            #region Mevcut kategori ve yazýlarýn slug'larýný oluþtur
+            if (autoGenerateSlugsAll)
+            {
+                foreach (var category in context.Categories.ToList())
+                {
+                    if (autoGenerateSlugs || string.IsNullOrEmpty(category.Slug))
+                    {
+                        category.Slug = UrlService.URLFriendly(category.CategoryName);
+                    }
+                }
+
+                foreach (var post in context.Posts.ToList())
+                {
+                    if (autoGenerateSlugs || string.IsNullOrEmpty(post.Slug))
+                    {
+                        post.Slug = UrlService.URLFriendly(post.Title);
                     }
                 }
             }

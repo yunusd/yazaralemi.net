@@ -11,7 +11,7 @@ namespace Yazaralemi.Controllers
 {
     public class HomeController : BaseController
     {
-        public ActionResult Index(int? cid, int page = 1)
+        public ActionResult Index(int? cid, string slug, int page = 1)
         {
             int postPerPage = 5;
 
@@ -29,20 +29,31 @@ namespace Yazaralemi.Controllers
                 ViewBag.Subtitle = cat.CategoryName;
 
             if (cid != null)
+            {
                 result = result.Where(x => x.CategoryId == cid);
 
-            if (result.Count() <= 0)
-                return PartialView("_NotFound");
+                if(cat.Slug != slug)
+                    return RedirectToRoute("CategoryRoute", new { cid, slug = cat.Slug, page });
+
+                if (result.Count() <= 0)
+                    return PartialView("_NotFound");
+            }
 
             ViewBag.pageCount = Math.Ceiling(result.Count() / (decimal)postPerPage);
             return View(result.OrderByDescending(x => x.CreatedAt).Skip((page - 1) * postPerPage).Take(postPerPage).ToList());
         }
 
-        public ActionResult ShowPost(int id)
+        public ActionResult ShowPost(int id, string slug)
         {
             var post = ctx.Posts.Find(id);
             if (post == null)
                 return HttpNotFound();
+
+            // eğer adresdeki slug veritabanı ile aynı değilse
+            if (post.Slug != slug)
+            {
+                return RedirectToRoute("PostRoute", new { id, slug = post.Slug });
+            }
             return View(post);
         }
 
