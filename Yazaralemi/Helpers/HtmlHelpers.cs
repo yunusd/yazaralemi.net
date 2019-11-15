@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Yazaralemi.Attributes;
+using Yazaralemi.Models;
 
 namespace Yazaralemi.Helpers
 {
@@ -26,7 +28,7 @@ namespace Yazaralemi.Helpers
             Type t = Type.GetType($"Yazaralemi.Areas.Admin.Controllers.{controller}Controller");
             object[] attributes = t.GetCustomAttributes(typeof(BreadcrumbAttribute), true);
 
-            if(attributes.Length == 0)
+            if (attributes.Length == 0)
                 return controller;
 
             var attr = (BreadcrumbAttribute)attributes[0];
@@ -43,7 +45,7 @@ namespace Yazaralemi.Helpers
 
             BreadcrumbAttribute ba = mi.GetCustomAttribute(typeof(BreadcrumbAttribute)) as BreadcrumbAttribute;
 
-            if(ba == null)
+            if (ba == null)
                 return action;
 
             return ba.Name;
@@ -53,13 +55,32 @@ namespace Yazaralemi.Helpers
         {
             var element = "<hr>";
             var pos = content.IndexOf(element);
-            if ( pos == -1)
+            if (pos == -1)
                 return htmlHelper.Raw(content);
 
             if (full)
                 return htmlHelper.Raw(content.Remove(pos, element.Length));
 
             return htmlHelper.Raw(content.Substring(0, pos));
+        }
+
+        public static string ProfilePhotoPath(this HtmlHelper htmlHelper)
+        {
+            string userId = htmlHelper.ViewContext.HttpContext.User.Identity.GetUserId();
+            UrlHelper urlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection);
+
+            if (userId != null)
+            {
+                using (var ctx = new ApplicationDbContext())
+                {
+                    var user = ctx.Users.Find(userId);
+                    if (user != null && !string.IsNullOrEmpty(user.Photo))
+                    {
+                        return urlHelper.Content($"~/Upload/Profiles/{user.Photo}");
+                    }
+                }
+            }
+            return urlHelper.Content("~/Images/avatar.png");
         }
     }
 }
