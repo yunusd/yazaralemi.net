@@ -33,7 +33,7 @@
                         <td>@post.Title</td>
                         <td>@post.Category.CategoryName</td>
                         <td>@post.Author.UserName</td>
-                        <td>@post.CreatedAt.Value</td>
+                        <td data-sort="@post.CreatedAt.Value.ToString("o")">@post.CreatedAt.Value</td>
                         <td>
                             <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal" data-post-title="@post.Title" data-post-id="@post.Id">Sil</a>
                             <a href="@Url.Action("Edit","Posts", new { id = post.Id })" class="btn btn-info">Düzenle</a>
@@ -81,9 +81,13 @@
     <script>
         $(function () {
             var table = $("#example1").DataTable({
-                "language": {
+                language: {
                     "url": "@Url.Content("~/Areas/Admin/plugins/datatables/Turkish.json")"
-                }
+                },
+                columnDefs: [
+                    { type: 'num', targets: 0 },
+                    { type: 'turkish', targets: '_all' }
+                ]
             });
 
             // sil modalı gözükürken tetiklenen event:

@@ -44,7 +44,11 @@
         var table = $(".table").DataTable({
             "language": {
                 "url": "@Url.Content("~/Areas/Admin/plugins/datatables/Turkish.json")"
-            }
+            },
+            columnDefs: [
+                { type: 'num', targets: 0 },
+                { type: 'turkish', targets: '_all' }
+            ]
         });
         var adminId = "@User.Identity.GetUserId()";
         $(`input:checkbox[data-user-id="${adminId}"]`).attr("disabled", "disabled");

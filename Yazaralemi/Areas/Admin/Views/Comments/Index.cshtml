@@ -24,7 +24,7 @@
                         <td>@comment.AuthorName</td>
                         <td>@comment.Post.Title</td>
                         <td>@comment.Content</td>
-                        <td>@comment.CreatedAt</td>
+                        <td data-sort="@comment.CreatedAt.Value.ToString("o")">@comment.CreatedAt.Value</td>
                     </tr>
                 }
             </tbody>
@@ -38,7 +38,11 @@
             order: [[4, "desc"]],
             language: {
                 "url": "@Url.Content("~/Areas/Admin/plugins/datatables/Turkish.json")"
-            }
+            },
+            columnDefs: [
+                { type: 'num', targets: 0 },
+                { type: 'turkish', targets: '_all' }
+            ]
         });
     </script>
 }

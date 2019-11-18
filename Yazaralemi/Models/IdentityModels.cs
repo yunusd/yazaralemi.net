@@ -52,7 +52,9 @@ namespace Yazaralemi.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            
+
+            modelBuilder.Entity<Comment>().HasRequired(x => x.Post).WithMany(x => x.Comments)
+                .WillCascadeOnDelete();
         }
 
         public DbSet<Category> Categories { get; set; }
